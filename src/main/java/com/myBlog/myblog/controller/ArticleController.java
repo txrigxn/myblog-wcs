@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -87,9 +89,40 @@ public class ArticleController {
     articleRepository.delete(article);
     return ResponseEntity.noContent().build();
   }
-  
-  
 
+  @GetMapping("/search-title")
+  public ResponseEntity<List<Article>> getArticlesByTitle(@RequestParam String title) {
+    List<Article> articles = articleRepository.findByTitle(title);  
+    if(articles.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.ok(articles);
+  }
 
-  
+  @GetMapping("/search-content")
+  public ResponseEntity<List<Article>> getArticlesByContent(@RequestParam String content) {
+    List<Article> articles = articleRepository.findByContentContaining(content);
+    if(articles.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.ok(articles);
+  }
+
+  @GetMapping("/created-after")
+  public ResponseEntity<List<Article>> getArticlesCreateAfter(@RequestParam LocalDateTime date) {
+    List<Article> articles = articleRepository.findByCreatedAtAfter(date);
+    if(articles.isEmpty()){
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.ok(articles);
+  }
+
+  @GetMapping("/latest")
+  public ResponseEntity<List<Article>> getFiveLastArticles() {
+    List<Article> articles = articleRepository.findTop5ByOrderByCreatedAtDesc();
+    if(articles.isEmpty()) {
+      return ResponseEntity.noContent().build();
+    }
+    return ResponseEntity.ok(articles);
+  }
 }
