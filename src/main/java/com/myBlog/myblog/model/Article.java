@@ -1,8 +1,8 @@
 package com.myBlog.myblog.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
 
 @Entity
 public class Article {
