@@ -24,7 +24,7 @@ public class CategoryDTO {
     this.name = name;
   }
 
-    public LocalDateTime getUpdatedAt() {
+  public LocalDateTime getUpdatedAt() {
     return updatedAt;
   }
 

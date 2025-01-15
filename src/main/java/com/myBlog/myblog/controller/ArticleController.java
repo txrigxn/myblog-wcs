@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myBlog.myblog.DTO.ArticleDTO;
 import com.myBlog.myblog.model.Article;
 import com.myBlog.myblog.model.Category;
+import com.myBlog.myblog.model.Image;
 import com.myBlog.myblog.repository.ArticleRepository;
 import com.myBlog.myblog.repository.CategoryRepository;
+import com.myBlog.myblog.repository.ImageRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,10 +35,12 @@ public class ArticleController {
   
   private final ArticleRepository articleRepository;
   private final CategoryRepository categoryRepository;
+  private final ImageRepository imageRepository;
   
-  public ArticleController(ArticleRepository articleRepository, CategoryRepository categoryRepository) {
+  public ArticleController(ArticleRepository articleRepository, CategoryRepository categoryRepository, ImageRepository imageRepository) {
     this.articleRepository = articleRepository;
     this.categoryRepository = categoryRepository;
+    this.imageRepository = imageRepository;
   }
 
   @GetMapping
@@ -72,6 +77,25 @@ public class ArticleController {
         article.setCategory(category);
       }
 
+
+      if(article.getImages() != null && !article.getImages().isEmpty()) {
+        List<Image> validImages = new ArrayList<>();
+        for (Image image : article.getImages()) {
+          if (image.getId() != null) {
+            Image existinImage = imageRepository.findById(image.getId()).orElse(null);
+            if (existinImage != null) {
+              validImages.add(existinImage);
+            } else {
+              return ResponseEntity.badRequest().body(null);
+            }
+          } else {
+            Image savedImage = imageRepository.save(image);
+            validImages.add(savedImage);
+          }
+        }
+        article.setImages(validImages);
+      }
+
       Article savedArticle = articleRepository.save(article);
       
       return ResponseEntity.status(HttpStatus.CREATED).body(convertToDTO(savedArticle));
@@ -95,6 +119,41 @@ public class ArticleController {
         }
         article.setCategory(category);
       }
+      if (articleDetails.getImages() != null) {
+
+        List<Image> validImages = new ArrayList<>();
+
+        for (Image image : articleDetails.getImages()) {
+
+          if (image.getId() != null) {
+
+          Image existingImage = imageRepository.findById(image.getId()).orElse(null);
+
+            if (existingImage != null) {
+
+              validImages.add(existingImage);
+
+            } else {
+
+              return ResponseEntity.badRequest().build(); 
+
+            }
+
+          } else {
+
+            Image savedImage = imageRepository.save(image);
+
+            validImages.add(savedImage);
+
+          }
+
+        }
+            article.setImages(validImages);
+
+        } else {
+
+            article.getImages().clear();
+        }
 
       Article updatedArticle = articleRepository.save(article); 
       
@@ -162,6 +221,9 @@ public class ArticleController {
     articleDTO.setUpdatedAt(article.getUpdatedAt());
     if(article.getCategory() != null) {
       articleDTO.setCategoryName(article.getCategory().getName());
+    }
+    if (article.getImages() != null) {
+      articleDTO.setImageUrls(article.getImages().stream().map(Image::getUrl).collect(Collectors.toList()));
     }
     return articleDTO;
     
