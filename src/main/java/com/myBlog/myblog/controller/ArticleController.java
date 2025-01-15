@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myBlog.myblog.model.Article;
+import com.myBlog.myblog.model.Category;
 import com.myBlog.myblog.repository.ArticleRepository;
+import com.myBlog.myblog.repository.CategoryRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,9 +29,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ArticleController {
   
   private final ArticleRepository articleRepository;
+  private final CategoryRepository categoryRepository;
   
-  public ArticleController(ArticleRepository articleRepository) {
+  public ArticleController(ArticleRepository articleRepository, CategoryRepository categoryRepository) {
     this.articleRepository = articleRepository;
+    this.categoryRepository = categoryRepository;
   }
 
   @GetMapping
@@ -57,6 +61,14 @@ public class ArticleController {
       article.setCreatedAt(LocalDateTime.now());
       article.setUpdatedAt(LocalDateTime.now());
 
+      if (article.getCategory() != null) {
+        Category category = categoryRepository.findById(article.getCategory().getId()).orElse(null);
+        if(category == null) {
+          return ResponseEntity.badRequest().body(null);
+        }
+        article.setCategory(category);
+      }
+
       Article savedArticle = articleRepository.save(article);
       
       return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
@@ -72,6 +84,14 @@ public class ArticleController {
       article.setTitle(articleDetails.getTitle());
       article.setContent(articleDetails.getContent());
       article.setUpdatedAt(LocalDateTime.now());
+
+      if (article.getCategory() != null) {
+        Category category = categoryRepository.findById(articleDetails.getCategory().getId()).orElse(null);
+        if(category == null) {
+          return ResponseEntity.badRequest().body(null);
+        }
+        article.setCategory(category);
+      }
 
       Article updatedArticle = articleRepository.save(article); 
       
