@@ -3,6 +3,8 @@ package com.myBlog.myblog.DTO;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.myBlog.myblog.model.ArticleAuthor;
+
 public class ArticleDTO {
   private Long id;
   private String title;
@@ -10,6 +12,7 @@ public class ArticleDTO {
   private LocalDateTime updatedAt;
   private String categoryName;
   private List<String> imageUrls;
+  private List<AuthorDTO> articleAuthors;
 
   public Long getId() {
     return id;
@@ -57,6 +60,14 @@ public class ArticleDTO {
 
   public void setImageUrls(List<String> imageUrls) {
     this.imageUrls = imageUrls;
+  }
+
+    public List<AuthorDTO> getArticleAuthors() {
+    return articleAuthors;
+  }
+
+  public void setArticleAuthors(List<AuthorDTO> articleAuthors) {
+    this.articleAuthors = articleAuthors;
   }
 
 }
