@@ -2,20 +2,17 @@ package com.myBlog.myblog.DTO;
 
 import java.util.List;
 
-import com.myBlog.myblog.model.Article;
-import com.myBlog.myblog.model.ArticleAuthor;
-
 public class AuthorDTO {
   private Long id;
   private String firstname;
   private String lastname;
-  private List<ArticleAuthor> articleAuthors;
+  private List<Long> articleIds;
 
 
   public Long getId() {
-
     return id;
   }
+  
   public void setId(Long id) {
     this.id = id;
   }
@@ -37,12 +34,12 @@ public class AuthorDTO {
     this.lastname = lastname;
   }
 
-  public List<ArticleAuthor> getArticleAuthors() {
-    return articleAuthors;
+  public List<Long> getArticleIds() {
+    return articleIds;
   }
 
-  public void setArticleAuthors(List<ArticleAuthor> articleAuthors) {
-    this.articleAuthors = articleAuthors;
+  public void setArticleIds(List<Long> articleIds) {
+    this.articleIds = articleIds;
   }
   
 }

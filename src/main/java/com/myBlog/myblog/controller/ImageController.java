@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.myBlog.myblog.DTO.ImageDTO;
 import com.myBlog.myblog.model.Article;
 import com.myBlog.myblog.model.Image;
-import com.myBlog.myblog.repository.ArticleRepository;
 import com.myBlog.myblog.repository.ImageRepository;
 
 import java.util.List;
@@ -25,11 +24,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/images")
 public class ImageController {
   private final ImageRepository imageRepository;
-  private final ArticleRepository articleRepository;
 
-  public ImageController(ImageRepository imageRepository, ArticleRepository articleRepository) {
+  public ImageController(ImageRepository imageRepository) {
     this.imageRepository = imageRepository;
-    this.articleRepository = articleRepository;
   }
 
     @GetMapping
@@ -111,15 +108,10 @@ public class ImageController {
         Image image = imageRepository.findById(id).orElse(null);
 
         if (image == null) {
-
             return ResponseEntity.notFound().build();
-
         }
-
         imageRepository.delete(image);
-
         return ResponseEntity.noContent().build();
-
     }
 
 

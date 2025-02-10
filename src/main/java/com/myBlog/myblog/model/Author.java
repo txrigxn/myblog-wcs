@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class Author {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
+  private Long id;
 
   @Column(nullable = false, length = 50)
   private String firstname;
@@ -22,7 +22,6 @@ public class Author {
   // Getters and Setters
 
   public Long getId() {
-
     return id;
   }
 
@@ -53,7 +52,7 @@ public class Author {
     return articleAuthors;
   }
 
-  public void setArticleAuthor(List<ArticleAuthor> articleAuthors) {
+  public void setArticleAuthors(List<ArticleAuthor> articleAuthors) {
     this.articleAuthors = articleAuthors;
   }
 

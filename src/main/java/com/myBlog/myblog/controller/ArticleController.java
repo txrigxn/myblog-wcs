@@ -267,7 +267,7 @@ public class ArticleController {
       articleDTO.setImageUrls(article.getImages().stream().map(Image::getUrl).collect(Collectors.toList()));
     }
     if (article.getArticleAuthors() != null) {
-      articleDTO.setArticleAuthors(article.getArticleAuthors().stream().filter(articleAuthor -> articleAuthor.getAuthor() != null).map(articleAuthor -> {
+      articleDTO.setAuthors(article.getArticleAuthors().stream().filter(articleAuthor -> articleAuthor.getAuthor() != null).map(articleAuthor -> {
         AuthorDTO authorDTO = new AuthorDTO();
         authorDTO.setId(articleAuthor.getAuthor().getId());
         authorDTO.setFirstname(articleAuthor.getAuthor().getFirstname());
