@@ -7,10 +7,15 @@ import com.myBlog.myblog.DTO.ImageDTO;
 import com.myBlog.myblog.model.Article;
 import com.myBlog.myblog.model.Image;
 import com.myBlog.myblog.repository.ImageRepository;
+import com.myBlog.myblog.service.ImageService;
+
+import io.micrometer.core.ipc.http.HttpSender.Response;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,114 +28,56 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/images")
 public class ImageController {
-  private final ImageRepository imageRepository;
+  private final ImageService imageService;
 
-  public ImageController(ImageRepository imageRepository) {
-    this.imageRepository = imageRepository;
+  public ImageController(ImageService imageService) {
+    this.imageService = imageService;
   }
 
     @GetMapping
 
     public ResponseEntity<List<ImageDTO>> getAllImages() {
+        List<ImageDTO> images = imageService.getAllImages();
 
-        List<Image> images = imageRepository.findAll();
-
-        if (images.isEmpty()) {
-
-            return ResponseEntity.noContent().build();
-
-        }
-
-        List<ImageDTO> imageDTOs = images.stream()
-
-            .map(this::convertToDTO)
-
-            .collect(Collectors.toList());
-
-        return ResponseEntity.ok(imageDTOs);
-
+        return images.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(images);
     }
 
 
     @GetMapping("/{id}")
 
     public ResponseEntity<ImageDTO> getImageById(@PathVariable Long id) {
+        ImageDTO image = imageService.getImageById(id);
 
-        Image image = imageRepository.findById(id).orElse(null);
-
-        if (image == null) {
-
-            return ResponseEntity.notFound().build();
-
-        }
-
-        return ResponseEntity.ok(convertToDTO(image));
-
+        return image != null ? ResponseEntity.ok(image) : ResponseEntity.notFound().build();
     }
 
 
     @PostMapping
 
-    public ResponseEntity<ImageDTO> createImage(@RequestBody Image image) {
-
-        Image savedImage = imageRepository.save(image);
-
-        return ResponseEntity.status(201).body(convertToDTO(savedImage));
-
+    public ResponseEntity<ImageDTO> create(@RequestBody Image image) {
+        ImageDTO savedImage = imageService.createImage(image);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedImage);
     }
 
 
     @PutMapping("/{id}")
 
-    public ResponseEntity<ImageDTO> updateImage(@PathVariable Long id, @RequestBody Image imageDetails) {
+    public ResponseEntity<ImageDTO> update(@PathVariable Long id, @RequestBody Image imageDetails) {
 
-        Image image = imageRepository.findById(id).orElse(null);
-
-        if (image == null) {
-
-            return ResponseEntity.notFound().build();
-
-        }
-
-        image.setUrl(imageDetails.getUrl());
-
-        Image updatedImage = imageRepository.save(image);
-
-        return ResponseEntity.ok(convertToDTO(updatedImage));
-
+        ImageDTO image = imageService.updateImage(id, imageDetails);
+        
+        return image != null ? ResponseEntity.ok(image) : ResponseEntity.notFound().build();
     }
 
 
     @DeleteMapping("/{id}")
 
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
-
-        Image image = imageRepository.findById(id).orElse(null);
-
-        if (image == null) {
-            return ResponseEntity.notFound().build();
-        }
-        imageRepository.delete(image);
-        return ResponseEntity.noContent().build();
+        return imageService.deleteImage(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
 
-    private ImageDTO convertToDTO(Image image) {
 
-        ImageDTO imageDTO = new ImageDTO();
-
-        imageDTO.setId(image.getId());
-
-        imageDTO.setUrl(image.getUrl());
-
-        if (image.getArticles() != null) {
-
-            imageDTO.setArticleIds(image.getArticles().stream().map(Article::getId).collect(Collectors.toList()));
-
-        }
-
-        return imageDTO;
-
-    }
   
 }
