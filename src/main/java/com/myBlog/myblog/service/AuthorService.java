@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.myBlog.myblog.DTO.AuthorDTO;
+import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.AuthorMapper;
 import com.myBlog.myblog.model.Author;
 import com.myBlog.myblog.repository.AuthorRepository;
@@ -26,7 +27,7 @@ public class AuthorService {
   }
 
   public AuthorDTO getAuthorById(Long id) {
-    Author author = authorRepository.findById(id).orElse(null);
+    Author author = authorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'auteur avec l'id " + id + " n'a pas été trouvé."));
 
     return author != null ? authorMapper.convertToDTO(author) : null;
   }
@@ -37,7 +38,7 @@ public class AuthorService {
   }
 
   public AuthorDTO updateAuthor(Long id, Author authorDetails) {
-    Author author = authorRepository.findById(id).orElse(null);
+    Author author = authorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'auteur avec l'id " + id + " n'a pas été trouvé."));
     if (author == null) return null;
 
     author.setFirstname(authorDetails.getFirstname());
@@ -49,7 +50,7 @@ public class AuthorService {
   }
 
   public boolean deleteAuthor(Long id) {
-    Author author = authorRepository.findById(id).orElse(null);
+    Author author = authorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'auteur avec l'id " + id + " n'a pas été trouvé."));
     if (author == null) return false;
     authorRepository.delete(author);
     return true;

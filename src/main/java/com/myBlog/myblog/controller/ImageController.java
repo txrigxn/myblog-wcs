@@ -4,18 +4,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myBlog.myblog.DTO.ImageDTO;
-import com.myBlog.myblog.model.Article;
 import com.myBlog.myblog.model.Image;
-import com.myBlog.myblog.repository.ImageRepository;
 import com.myBlog.myblog.service.ImageService;
 
-import io.micrometer.core.ipc.http.HttpSender.Response;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +32,6 @@ public class ImageController {
 
     public ResponseEntity<List<ImageDTO>> getAllImages() {
         List<ImageDTO> images = imageService.getAllImages();
-
         return images.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(images);
     }
 
@@ -76,8 +69,4 @@ public class ImageController {
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
         return imageService.deleteImage(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
-
-
-
-  
 }

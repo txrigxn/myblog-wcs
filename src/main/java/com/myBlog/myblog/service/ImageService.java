@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.myBlog.myblog.DTO.ImageDTO;
+import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.ImageMapper;
 import com.myBlog.myblog.model.Image;
 import com.myBlog.myblog.repository.ImageRepository;
@@ -21,14 +22,13 @@ public class ImageService {
 
   public List<ImageDTO> getAllImages() {
     List<Image> images = imageRepository.findAll();
-    
     List<ImageDTO> imageDTOs = images.stream().map(imageMapper::convertToDTO).collect(Collectors.toList());
 
     return imageDTOs;
   }
 
   public ImageDTO getImageById(Long id) {
-    Image image = imageRepository.findById(id).orElse(null);
+    Image image = imageRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'image avec l'id " + id + " n'a pas été trouvé."));
 
     return image != null ? imageMapper.convertToDTO(image) : null;
   }
@@ -40,7 +40,7 @@ public class ImageService {
   }
 
   public ImageDTO updateImage(Long id, Image imageDetails) {
-    Image image = imageRepository.findById(id).orElse(null);
+    Image image = imageRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'image avec l'id " + id + " n'a pas été trouvé."));
 
     if (image == null) return null;
     image.setUrl(imageDetails.getUrl());
@@ -52,7 +52,7 @@ public class ImageService {
   }
 
   public boolean deleteImage(Long id) {
-    Image image = imageRepository.findById(id).orElse(null);
+    Image image = imageRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'image avec l'id " + id + " n'a pas été trouvé."));
 
     if (image == null) return false;
 

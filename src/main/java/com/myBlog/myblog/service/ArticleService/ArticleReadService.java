@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.myBlog.myblog.DTO.ArticleDTO;
+import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.ArticleMapper;
 import com.myBlog.myblog.model.Article;
 import com.myBlog.myblog.repository.ArticleRepository;
@@ -27,7 +28,7 @@ public class ArticleReadService {
   }
 
   public ArticleDTO getArticleById(Long id) {
-    Article article = articleRepository.findById(id).orElse(null);
+    Article article = articleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'article avec l'id " + id + " n'a pas été trouvé."));
     if (article == null) return null;
     return articleMapper.convertToDTO(article);
   }

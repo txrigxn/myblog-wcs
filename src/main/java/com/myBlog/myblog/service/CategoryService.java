@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.myBlog.myblog.DTO.CategoryDTO;
+import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.CategoryMapper;
 import com.myBlog.myblog.model.Category;
 import com.myBlog.myblog.repository.CategoryRepository;
@@ -28,7 +29,7 @@ public class CategoryService {
   }
 
   public CategoryDTO getCategoryById(Long id) {
-    Category category = categoryRepository.findById(id).orElse(null);
+    Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
 
     return category != null ? categoryMapper.convertToDTO(category) : null;
   }
@@ -43,7 +44,7 @@ public class CategoryService {
   }
 
   public CategoryDTO updateCategory(Long id, Category categoryDetails) {
-    Category category = categoryRepository.findById(id).orElse(null);
+    Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));;
 
     if (category == null) return null;
 
@@ -56,7 +57,7 @@ public class CategoryService {
   }
 
   public boolean deleteCategory(Long id) {
-    Category category = categoryRepository.findById(id).orElse(null);
+    Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));;
     if (category == null) return false;
     categoryRepository.delete(category);
     return true;
