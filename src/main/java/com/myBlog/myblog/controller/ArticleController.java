@@ -3,10 +3,13 @@ package com.myBlog.myblog.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.myBlog.myblog.DTO.ArticleCreateDTO;
 import com.myBlog.myblog.DTO.ArticleDTO;
 import com.myBlog.myblog.model.Article;
 import com.myBlog.myblog.service.ArticleService.ArticleReadService;
 import com.myBlog.myblog.service.ArticleService.ArticleWriteService;
+
+import jakarta.validation.Valid;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -52,8 +55,8 @@ public class ArticleController {
   }
 
   @PostMapping
-  public ResponseEntity<ArticleDTO> createArticle(@RequestBody Article article) {
-      ArticleDTO savedArticle = articleWriteService.createArticle(article);
+  public ResponseEntity<ArticleDTO> createArticle(@Valid @RequestBody ArticleCreateDTO articleCreateDTO) {
+      ArticleDTO savedArticle = articleWriteService.createArticle(articleCreateDTO);
       return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
   }
 

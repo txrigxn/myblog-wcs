@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.myBlog.myblog.DTO.ArticleCreateDTO;
 import com.myBlog.myblog.DTO.ArticleDTO;
 import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.ArticleMapper;
@@ -38,7 +39,9 @@ public class ArticleWriteService {
     this.authorRepository = authorRepository;
   }
 
-  public ArticleDTO createArticle(Article article) {
+  public ArticleDTO createArticle(ArticleCreateDTO articleCreateDTO) {
+    
+    Article article = articleMapper.convertToEntity(articleCreateDTO);
     article.setCreatedAt(LocalDateTime.now());
     article.setUpdatedAt(LocalDateTime.now());
 
