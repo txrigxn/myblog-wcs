@@ -40,6 +40,7 @@ public class ArticleWriteService {
   }
 
   public ArticleDTO createArticle(ArticleCreateDTO articleCreateDTO) {
+    
     Article article = articleMapper.convertToEntity(articleCreateDTO);
     article.setCreatedAt(LocalDateTime.now());
     article.setUpdatedAt(LocalDateTime.now());
