@@ -3,8 +3,10 @@ package com.myBlog.myblog.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.myBlog.myblog.DTO.UserLoginDTO;
 import com.myBlog.myblog.DTO.UserRegistrationDTO;
 import com.myBlog.myblog.model.User;
+import com.myBlog.myblog.security.AuthenticationService;
 import com.myBlog.myblog.service.UserService;
 
 import java.util.Set;
@@ -19,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/auth")
 public class AuthController {
   private final UserService userService;
+  private final AuthenticationService authenticationService;
 
-  public AuthController(UserService userService) {
+  public AuthController(UserService userService, AuthenticationService authenticationService) {
     this.userService = userService;
+    this.authenticationService = authenticationService;
   }
 
   @PostMapping("register")
@@ -32,6 +36,12 @@ public class AuthController {
         Set.of("ROLE_USER")
       );
       return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
+  }
+ 
+  @PostMapping("login")
+  public ResponseEntity<String> authenticate(@RequestBody UserLoginDTO userLoginDTO) {
+      String token = authenticationService.authenticate(userLoginDTO.getEmail(), userLoginDTO.getPassword());
+      return ResponseEntity.ok(token);
   }
   
   
