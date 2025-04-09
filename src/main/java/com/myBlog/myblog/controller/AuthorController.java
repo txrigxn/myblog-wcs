@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,8 +18,6 @@ import com.myBlog.myblog.service.AuthorService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @RestController
 @RequestMapping("/authors")
@@ -36,32 +35,33 @@ public class AuthorController {
       return ResponseEntity.noContent().build();
     }
     return ResponseEntity.ok(authors);
-  
+
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable Long id) {
-      AuthorDTO author = authorService.getAuthorById(id);
-      return author != null ? ResponseEntity.ok(author) : ResponseEntity.notFound().build();
+    AuthorDTO author = authorService.getAuthorById(id);
+    return author != null ? ResponseEntity.ok(author) : ResponseEntity.notFound().build();
   }
 
-    @PostMapping
-    public ResponseEntity<AuthorDTO> create(@RequestBody Author authorBody) {
-        AuthorDTO savedAuthor = authorService.createAuthor(authorBody);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedAuthor);
-    }
+  @PostMapping
+  public ResponseEntity<AuthorDTO> create(@RequestBody Author authorBody) {
+    AuthorDTO savedAuthor = authorService.createAuthor(authorBody);
+    return ResponseEntity.status(HttpStatus.CREATED).body(savedAuthor);
+  }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<AuthorDTO> update(@PathVariable Long id, @RequestBody Author authorBody) {
-      AuthorDTO author = authorService.updateAuthor(id, authorBody);
+  @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
+  @PutMapping("/{id}")
+  public ResponseEntity<AuthorDTO> update(@PathVariable Long id, @RequestBody Author authorBody) {
+    AuthorDTO author = authorService.updateAuthor(id, authorBody);
 
-      return author != null ? ResponseEntity.ok(author) : ResponseEntity.notFound().build();
-    }
+    return author != null ? ResponseEntity.ok(author) : ResponseEntity.notFound().build();
+  }
 
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-      return authorService.deleteAuthor(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
-    }
+  @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
+    return authorService.deleteAuthor(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+  }
 
 }

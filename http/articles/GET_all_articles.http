@@ -1,0 +1,2 @@
+### GET ALL ARTICLES
+GET {{HOST}}/articles

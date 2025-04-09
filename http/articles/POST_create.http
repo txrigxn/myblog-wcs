@@ -1,0 +1,23 @@
+### POST CREATE ARTICLE
+
+POST {{HOST}}/articles
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSx7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTc0NTE1MDI2MywiZXhwIjoxNzQ1MTUzODYzfQ.KJNRCszielJ7J9AzYMqhayBLE-fdsrvUFCF1ZmqK0_4
+
+{
+    "title": "teeeeeee",
+    "content": "Ileeeeeeeeeeeeeeeeee",
+    "categoryId": 1,
+    "images": [
+        {
+            "url": "https://example.com/image.jpg"
+        }
+    ],
+    "authors": [
+        {
+            "authorId": 1,
+            "contribution": "Écrivain"
+        }
+    ]
+}
+

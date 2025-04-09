@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -30,19 +29,17 @@ public class AuthController {
 
   @PostMapping("register")
   public ResponseEntity<User> register(@RequestBody UserRegistrationDTO userRegistrationDTO) {
-      User registeredUser = userService.registerUser(
-        userRegistrationDTO.getEmail(), 
-        userRegistrationDTO.getPassword(), 
-        Set.of("ROLE_USER")
-      );
-      return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
+    User registeredUser = userService.registerUser(
+        userRegistrationDTO.getEmail(),
+        userRegistrationDTO.getPassword(),
+        Set.of("ROLE_USER"));
+    return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
   }
- 
+
   @PostMapping("login")
   public ResponseEntity<String> authenticate(@RequestBody UserLoginDTO userLoginDTO) {
-      String token = authenticationService.authenticate(userLoginDTO.getEmail(), userLoginDTO.getPassword());
-      return ResponseEntity.ok(token);
+    String token = authenticationService.authenticate(userLoginDTO.getEmail(), userLoginDTO.getPassword());
+    return ResponseEntity.ok(token);
   }
-  
-  
+
 }

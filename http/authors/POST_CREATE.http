@@ -1,0 +1,12 @@
+### POST CREATE AUTHORS
+
+POST {{HOST}}/authors
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSx7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTc0NTE0OTcxMywiZXhwIjoxNzQ1MTUzMzEzfQ.HXNZEXnFYHQjkO4gVnDckdJR4ve36gwMj4xLNo4enLs
+
+{
+  "firstname": "John",
+  "lastname": "Doe",
+  "articleIds": []
+}
+

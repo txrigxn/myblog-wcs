@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,10 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequestMapping("/articles")
 public class ArticleController {
-  
+
   private final ArticleReadService articleReadService;
   private final ArticleWriteService articleWriteService;
-  
+
   public ArticleController(ArticleReadService articleReadService, ArticleWriteService articleWriteService) {
     this.articleWriteService = articleWriteService;
     this.articleReadService = articleReadService;
@@ -38,38 +39,40 @@ public class ArticleController {
   @GetMapping
   public ResponseEntity<List<ArticleDTO>> getAllArticles() {
     List<ArticleDTO> articles = articleReadService.getAllArticles();
-    if(articles.isEmpty()) {
+    if (articles.isEmpty()) {
       return ResponseEntity.noContent().build();
     }
     return ResponseEntity.ok(articles);
-    
+
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<ArticleDTO> getArticleById(@PathVariable Long id) {
-       ArticleDTO article = articleReadService.getArticleById(id);
-        if (article == null) {
-          return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(article);
+    ArticleDTO article = articleReadService.getArticleById(id);
+    if (article == null) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(article);
   }
 
   @PostMapping
   public ResponseEntity<ArticleDTO> createArticle(@Valid @RequestBody ArticleCreateDTO articleCreateDTO) {
-      ArticleDTO savedArticle = articleWriteService.createArticle(articleCreateDTO);
-      return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
+    ArticleDTO savedArticle = articleWriteService.createArticle(articleCreateDTO);
+    return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
   }
 
   @PutMapping("/{id}")
+  @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   public ResponseEntity<ArticleDTO> updateArticle(@PathVariable Long id, @RequestBody Article articleDetails) {
-      ArticleDTO updatedArticle = articleWriteService.updateArticle(id, articleDetails);
-      if (updatedArticle == null) {
-        return ResponseEntity.notFound().build();
-      }
-      return ResponseEntity.ok(updatedArticle);
+    ArticleDTO updatedArticle = articleWriteService.updateArticle(id, articleDetails);
+    if (updatedArticle == null) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(updatedArticle);
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/{id}")  
+  @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
     if (articleWriteService.deleteArticle(id)) {
       return ResponseEntity.noContent().build();
@@ -91,14 +94,14 @@ public class ArticleController {
   }
 
   @GetMapping("/created-after")
-    public ResponseEntity<List<ArticleDTO>> getArticlesCreateAfter(@RequestParam LocalDateTime date) {
-      List<ArticleDTO> articleDTOs = articleReadService.getArticlesCreatedAfter(date);
-      return articleDTOs.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(articleDTOs);
-    }
+  public ResponseEntity<List<ArticleDTO>> getArticlesCreateAfter(@RequestParam LocalDateTime date) {
+    List<ArticleDTO> articleDTOs = articleReadService.getArticlesCreatedAfter(date);
+    return articleDTOs.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(articleDTOs);
+  }
 
   @GetMapping("/latest")
-    public ResponseEntity<List<ArticleDTO>> getFiveLastArticles() {
-      List<ArticleDTO> articleDTOs = articleReadService.getFiveLastArticles();
-      return articleDTOs.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(articleDTOs);
-    }
+  public ResponseEntity<List<ArticleDTO>> getFiveLastArticles() {
+    List<ArticleDTO> articleDTOs = articleReadService.getFiveLastArticles();
+    return articleDTOs.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(articleDTOs);
+  }
 }
