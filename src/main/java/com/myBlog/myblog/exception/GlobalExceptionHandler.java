@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
   @ExceptionHandler(ResourceNotFoundException.class)
-
   public ResponseEntity<String> handleResourceNotFound(ResourceNotFoundException exception) {
     return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
   }
@@ -24,7 +23,6 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur est survenue.");
   }
 
-  
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
 
@@ -32,16 +30,15 @@ public class GlobalExceptionHandler {
 
     ex.getBindingResult().getAllErrors().forEach((error) -> {
 
-        String fieldName = ((FieldError) error).getField();
+      String fieldName = ((FieldError) error).getField();
 
-        String errorMessage = error.getDefaultMessage();
+      String errorMessage = error.getDefaultMessage();
 
-        errors.put(fieldName, errorMessage);
+      errors.put(fieldName, errorMessage);
 
     });
 
     return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-}
+  }
 
-  
 }

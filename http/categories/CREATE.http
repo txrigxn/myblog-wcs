@@ -2,7 +2,7 @@
 
 POST {{HOST}}/categories
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSx7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTc0NTE1MDI2MywiZXhwIjoxNzQ1MTUzODYzfQ.KJNRCszielJ7J9AzYMqhayBLE-fdsrvUFCF1ZmqK0_4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbGVzIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sImlhdCI6MTc0NTIzMTU3MywiZXhwIjoxNzQ1MjM1MTczfQ.IYS4Sc2mbwvidkSZr7Ij6bxC_Hee9IyhcqK5wPf6Nos
 
 {
     "name": "Informatique"

@@ -1,5 +1,8 @@
 package com.myBlog.myblog.security;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import com.myBlog.myblog.service.CustomUserDetailsService;
 
@@ -21,6 +25,9 @@ import com.myBlog.myblog.service.CustomUserDetailsService;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
+  @Value("${cors.allowed-origin}")
+  private String allowedOrigin;
 
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
   private final CustomUserDetailsService customUserDetailsService;
@@ -39,6 +46,15 @@ public class SecurityConfig {
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
+        .cors(cors -> cors
+            .configurationSource(request -> {
+              CorsConfiguration config = new CorsConfiguration();
+              config.setAllowedOrigins(List.of(allowedOrigin));
+              config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+              config.setAllowedHeaders(List.of("*"));
+              config.setAllowCredentials(true);
+              return config;
+            }))
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(HttpMethod.GET, "/authors/**").permitAll()
             .requestMatchers(HttpMethod.GET, "/articles/**").permitAll()
