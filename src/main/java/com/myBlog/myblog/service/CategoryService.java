@@ -21,7 +21,7 @@ public class CategoryService {
     this.categoryRepository = categoryRepository;
     this.categoryMapper = categoryMapper;
   }
-  
+
   public List<CategoryDTO> getAllCategories() {
     List<Category> categories = categoryRepository.findAll();
 
@@ -29,7 +29,8 @@ public class CategoryService {
   }
 
   public CategoryDTO getCategoryById(Long id) {
-    Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
+    Category category = categoryRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
 
     return category != null ? categoryMapper.convertToDTO(category) : null;
   }
@@ -44,9 +45,12 @@ public class CategoryService {
   }
 
   public CategoryDTO updateCategory(Long id, Category categoryDetails) {
-    Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));;
+    Category category = categoryRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
+    ;
 
-    if (category == null) return null;
+    if (category == null)
+      return null;
 
     category.setName(categoryDetails.getName());
     category.setUpdatedAt(categoryDetails.getUpdatedAt());
@@ -57,8 +61,11 @@ public class CategoryService {
   }
 
   public boolean deleteCategory(Long id) {
-    Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));;
-    if (category == null) return false;
+    Category category = categoryRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
+    ;
+    if (category == null)
+      return false;
     categoryRepository.delete(category);
     return true;
   }
