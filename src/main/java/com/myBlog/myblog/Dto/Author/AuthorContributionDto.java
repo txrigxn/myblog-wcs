@@ -1,10 +1,10 @@
-package com.myBlog.myblog.DTO;
+package com.myBlog.myblog.Dto.Author;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-public class AuthorContributionDTO {
+public class AuthorContributionDto {
 
   @NotNull(message = "L'ID de l'auteur ne doit pas être nul")
   @Positive(message = "L'ID de l'auteur doit être un nombre positif")

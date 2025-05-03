@@ -1,8 +1,8 @@
-package com.myBlog.myblog.DTO;
+package com.myBlog.myblog.Dto.Author;
 
 import java.util.List;
 
-public class AuthorDTO {
+public class AuthorDto {
   private Long id;
   private String firstname;
   private String lastname;

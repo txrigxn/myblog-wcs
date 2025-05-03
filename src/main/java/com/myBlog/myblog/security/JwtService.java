@@ -18,19 +18,19 @@ public class JwtService {
 
   @Value("${security.jwt.expiration-time}")
   private long jwtExpiration;
-  
+
   public String generateToken(UserDetails userDetails) {
     return Jwts.builder()
-      .setSubject(userDetails.getUsername())
-      .claim("roles", userDetails.getAuthorities())
-      .setIssuedAt(new Date())
-      .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
-      .signWith(SignatureAlgorithm.HS256, secretKey)
-      .compact();
+        .setSubject(userDetails.getUsername())
+        .claim("roles", userDetails.getAuthorities())
+        .setIssuedAt(new Date())
+        .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+        .signWith(SignatureAlgorithm.HS256, secretKey)
+        .compact();
   }
 
   public Claims extractClaims(String token) {
-    return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
+   return Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
   }
 
   public boolean validateJwtToken(String token) {
@@ -41,5 +41,5 @@ public class JwtService {
       return false;
     }
   }
-  
+
 }

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.myBlog.myblog.DTO.CategoryDTO;
+import com.myBlog.myblog.Dto.Category.CategoryDto;
 import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.CategoryMapper;
 import com.myBlog.myblog.model.Category;
@@ -21,44 +21,52 @@ public class CategoryService {
     this.categoryRepository = categoryRepository;
     this.categoryMapper = categoryMapper;
   }
-  
-  public List<CategoryDTO> getAllCategories() {
+
+  public List<CategoryDto> getAllCategories() {
     List<Category> categories = categoryRepository.findAll();
 
-    return categories.stream().map(categoryMapper::convertToDTO).collect(Collectors.toList());
+    return categories.stream().map(categoryMapper::convertToDto).collect(Collectors.toList());
   }
 
-  public CategoryDTO getCategoryById(Long id) {
-    Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
+  public CategoryDto getCategoryById(Long id) {
+    Category category = categoryRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
 
-    return category != null ? categoryMapper.convertToDTO(category) : null;
+    return category != null ? categoryMapper.convertToDto(category) : null;
   }
 
-  public CategoryDTO createCategory(Category category) {
+  public CategoryDto createCategory(Category category) {
     category.setCreatedAt(LocalDateTime.now());
     category.setUpdatedAt(LocalDateTime.now());
 
     Category savedCategory = categoryRepository.save(category);
 
-    return categoryMapper.convertToDTO(savedCategory);
+    return categoryMapper.convertToDto(savedCategory);
   }
 
-  public CategoryDTO updateCategory(Long id, Category categoryDetails) {
-    Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));;
+  public CategoryDto updateCategory(Long id, Category categoryDetails) {
+    Category category = categoryRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
+    ;
 
-    if (category == null) return null;
+    if (category == null)
+      return null;
 
     category.setName(categoryDetails.getName());
     category.setUpdatedAt(categoryDetails.getUpdatedAt());
 
     Category updatedCategory = categoryRepository.save(category);
 
-    return categoryMapper.convertToDTO(updatedCategory);
+    return categoryMapper.convertToDto(updatedCategory);
   }
 
   public boolean deleteCategory(Long id) {
-    Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));;
-    if (category == null) return false;
+    Category category = categoryRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
+    ;
+    if (category == null) {
+      return false;
+    }
     categoryRepository.delete(category);
     return true;
   }

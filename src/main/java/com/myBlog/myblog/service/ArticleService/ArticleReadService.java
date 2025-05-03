@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.myBlog.myblog.DTO.ArticleDTO;
+import com.myBlog.myblog.Dto.Article.ArticleDto;
 import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.ArticleMapper;
 import com.myBlog.myblog.model.Article;
@@ -22,34 +22,37 @@ public class ArticleReadService {
     this.articleMapper = articleMapper;
   }
 
-  public List<ArticleDTO> getAllArticles() {
+  public List<ArticleDto> getAllArticles() {
     List<Article> articles = articleRepository.findAll();
-    return articles.stream().map(articleMapper::convertToDTO).collect(Collectors.toList());
+    return articles.stream().map(articleMapper::convertToDto).collect(Collectors.toList());
   }
 
-  public ArticleDTO getArticleById(Long id) {
-    Article article = articleRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'article avec l'id " + id + " n'a pas été trouvé."));
-    if (article == null) return null;
-    return articleMapper.convertToDTO(article);
+  public ArticleDto getArticleById(Long id) {
+    Article article = articleRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("L'article avec l'id " + id + " n'a pas été trouvé."));
+    if (article == null) {
+      return null;
+    }
+    return articleMapper.convertToDto(article);
   }
 
-  public List<ArticleDTO> getArticlesByTitle(String title) {
+  public List<ArticleDto> getArticlesByTitle(String title) {
     List<Article> articles = articleRepository.findByTitle(title);
-    return articles.stream().map(articleMapper::convertToDTO).collect(Collectors.toList());
+    return articles.stream().map(articleMapper::convertToDto).collect(Collectors.toList());
   }
 
-  public List<ArticleDTO> getArticlesByContent(String content) {
+  public List<ArticleDto> getArticlesByContent(String content) {
     List<Article> articles = articleRepository.findByContentContaining(content);
-    return articles.stream().map(articleMapper::convertToDTO).collect(Collectors.toList());
+    return articles.stream().map(articleMapper::convertToDto).collect(Collectors.toList());
   }
 
-  public List<ArticleDTO> getArticlesCreatedAfter(LocalDateTime date) {
+  public List<ArticleDto> getArticlesCreatedAfter(LocalDateTime date) {
     List<Article> articles = articleRepository.findByCreatedAtAfter(date);
-    return articles.stream().map(articleMapper::convertToDTO).collect(Collectors.toList());
+    return articles.stream().map(articleMapper::convertToDto).collect(Collectors.toList());
   }
 
-  public List<ArticleDTO> getFiveLastArticles() {
+  public List<ArticleDto> getFiveLastArticles() {
     List<Article> articles = articleRepository.findTop5ByOrderByCreatedAtDesc();
-    return articles.stream().map(articleMapper::convertToDTO).collect(Collectors.toList());
+    return articles.stream().map(articleMapper::convertToDto).collect(Collectors.toList());
   }
 }

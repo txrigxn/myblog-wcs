@@ -3,7 +3,7 @@ package com.myBlog.myblog.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myBlog.myblog.DTO.CategoryDTO;
+import com.myBlog.myblog.Dto.Category.CategoryDto;
 import com.myBlog.myblog.model.Category;
 import com.myBlog.myblog.service.CategoryService;
 
@@ -29,8 +29,8 @@ public class CategoryController {
   }
 
   @GetMapping
-  public ResponseEntity<List<CategoryDTO>> getAllCategories() {
-    List<CategoryDTO> categories = categoryService.getAllCategories();
+  public ResponseEntity<List<CategoryDto>> getAllCategories() {
+    List<CategoryDto> categories = categoryService.getAllCategories();
 
     if (categories.isEmpty()) {
       return ResponseEntity.noContent().build();
@@ -39,31 +39,31 @@ public class CategoryController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<CategoryDTO> getCategoryById(@RequestParam Long id) {
-    CategoryDTO category = categoryService.getCategoryById(id);
+  public ResponseEntity<CategoryDto> getCategoryById(@RequestParam Long id) {
+    CategoryDto category = categoryService.getCategoryById(id);
     return category != null ? ResponseEntity.ok(category) : ResponseEntity.notFound().build();
   }
 
   @PostMapping
-  public ResponseEntity<CategoryDTO> create(@RequestBody Category category) {
-    CategoryDTO savedCategory = categoryService.createCategory(category);
+  public ResponseEntity<CategoryDto> create(@RequestBody Category category) {
+    CategoryDto savedCategory = categoryService.createCategory(category);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
 
   }
 
-  @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   @PostMapping("/{id}")
-  public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody Category categoryDetails) {
-    CategoryDTO category = categoryService.updateCategory(id, categoryDetails);
+  public ResponseEntity<CategoryDto> update(@PathVariable Long id, @RequestBody Category categoryDetails) {
+    CategoryDto category = categoryService.updateCategory(id, categoryDetails);
 
     return category != null ? ResponseEntity.ok(category) : ResponseEntity.notFound().build();
   }
 
-  @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
-    return categoryService.deleteCategory(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    return categoryService.deleteCategory(id)
+        ? ResponseEntity.noContent().build()
+        : ResponseEntity.notFound().build();
   }
 
 }

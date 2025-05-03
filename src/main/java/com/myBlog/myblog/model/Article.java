@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Entity
 public class Article {
   @Id
@@ -20,7 +19,6 @@ public class Article {
   @Column(nullable = false, updatable = false)
   private LocalDateTime createdAt;
 
-
   @Column(updatable = true)
   private LocalDateTime updatedAt;
 
@@ -29,11 +27,7 @@ public class Article {
   private Category category;
 
   @ManyToMany
-  @JoinTable(
-    name = "article_image", 
-    joinColumns = @JoinColumn(name = "article_id"), 
-    inverseJoinColumns = @JoinColumn(name = "image_id")
-  )
+  @JoinTable(name = "article_image", joinColumns = @JoinColumn(name = "article_id"), inverseJoinColumns = @JoinColumn(name = "image_id"))
   private List<Image> images;
 
   @OneToMany(mappedBy = "article")
@@ -42,16 +36,16 @@ public class Article {
   public Long getId() {
     return id;
   }
-  
+
   public void setId(Long id) {
     this.id = id;
   }
-  
+
   public String getTitle() {
     return title;
   }
 
-  public void setTitle (String title) {
+  public void setTitle(String title) {
     this.title = title;
   }
 
@@ -64,8 +58,8 @@ public class Article {
   }
 
   public LocalDateTime getCreatedAt() {
-      return createdAt;
-    }
+    return createdAt;
+  }
 
   public void setCreatedAt(LocalDateTime createdAt) {
     this.createdAt = createdAt;

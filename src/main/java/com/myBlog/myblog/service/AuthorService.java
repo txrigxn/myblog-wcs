@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.myBlog.myblog.DTO.AuthorDTO;
+import com.myBlog.myblog.Dto.Author.AuthorDto;
 import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.AuthorMapper;
 import com.myBlog.myblog.model.Author;
@@ -21,37 +21,46 @@ public class AuthorService {
     this.authorRepository = authorRepository;
   }
 
-  public List<AuthorDTO> getAllAuthors() {
+  public List<AuthorDto> getAllAuthors() {
     List<Author> authors = authorRepository.findAll();
-    return authors.stream().map(authorMapper::convertToDTO).collect(Collectors.toList());
+    return authors.stream().map(authorMapper::convertToDto).collect(Collectors.toList());
   }
 
-  public AuthorDTO getAuthorById(Long id) {
-    Author author = authorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'auteur avec l'id " + id + " n'a pas été trouvé."));
+  public AuthorDto getAuthorById(Long id) {
+    Author author = authorRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("L'auteur avec l'id " + id + " n'a pas été trouvé."));
 
-    return author != null ? authorMapper.convertToDTO(author) : null;
+    return author != null ? authorMapper.convertToDto(author) : null;
   }
 
-  public AuthorDTO createAuthor(Author author) {
+  public AuthorDto createAuthor(Author author) {
     Author savedAuthor = authorRepository.save(author);
-    return authorMapper.convertToDTO(savedAuthor);
+    return authorMapper.convertToDto(savedAuthor);
   }
 
-  public AuthorDTO updateAuthor(Long id, Author authorDetails) {
-    Author author = authorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'auteur avec l'id " + id + " n'a pas été trouvé."));
-    if (author == null) return null;
+  public AuthorDto updateAuthor(Long id, Author authorDetails) {
+    Author author = authorRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException(
+            "L'auteur avec l'id " + id + " n'a pas été trouvé."));
+    if (author == null) {
+      return null;
+    }
 
     author.setFirstname(authorDetails.getFirstname());
     author.setLastname(authorDetails.getLastname());
     author.setArticleAuthors(authorDetails.getArticleAuthors());
 
     Author updatedAuthor = authorRepository.save(author);
-    return authorMapper.convertToDTO(updatedAuthor);
+    return authorMapper.convertToDto(updatedAuthor);
   }
 
   public boolean deleteAuthor(Long id) {
-    Author author = authorRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("L'auteur avec l'id " + id + " n'a pas été trouvé."));
-    if (author == null) return false;
+    Author author = authorRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException(
+            "L'auteur avec l'id " + id + " n'a pas été trouvé."));
+    if (author == null) {
+      return false;
+    }
     authorRepository.delete(author);
     return true;
   }

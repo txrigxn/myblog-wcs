@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myBlog.myblog.DTO.AuthorDTO;
+import com.myBlog.myblog.Dto.Author.AuthorDto;
 import com.myBlog.myblog.model.Author;
 import com.myBlog.myblog.service.AuthorService;
 
@@ -29,8 +29,8 @@ public class AuthorController {
   }
 
   @GetMapping
-  public ResponseEntity<List<AuthorDTO>> getAllAuthors() {
-    List<AuthorDTO> authors = authorService.getAllAuthors();
+  public ResponseEntity<List<AuthorDto>> getAllAuthors() {
+    List<AuthorDto> authors = authorService.getAllAuthors();
     if (authors.isEmpty()) {
       return ResponseEntity.noContent().build();
     }
@@ -39,21 +39,21 @@ public class AuthorController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable Long id) {
-    AuthorDTO author = authorService.getAuthorById(id);
+  public ResponseEntity<AuthorDto> getAuthorById(@PathVariable Long id) {
+    AuthorDto author = authorService.getAuthorById(id);
     return author != null ? ResponseEntity.ok(author) : ResponseEntity.notFound().build();
   }
 
   @PostMapping
-  public ResponseEntity<AuthorDTO> create(@RequestBody Author authorBody) {
-    AuthorDTO savedAuthor = authorService.createAuthor(authorBody);
+  public ResponseEntity<AuthorDto> create(@RequestBody Author authorBody) {
+    AuthorDto savedAuthor = authorService.createAuthor(authorBody);
     return ResponseEntity.status(HttpStatus.CREATED).body(savedAuthor);
   }
 
   @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   @PutMapping("/{id}")
-  public ResponseEntity<AuthorDTO> update(@PathVariable Long id, @RequestBody Author authorBody) {
-    AuthorDTO author = authorService.updateAuthor(id, authorBody);
+  public ResponseEntity<AuthorDto> update(@PathVariable Long id, @RequestBody Author authorBody) {
+    AuthorDto author = authorService.updateAuthor(id, authorBody);
 
     return author != null ? ResponseEntity.ok(author) : ResponseEntity.notFound().build();
   }

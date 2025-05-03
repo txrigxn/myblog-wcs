@@ -1,9 +1,9 @@
-package com.myBlog.myblog.DTO;
+package com.myBlog.myblog.Dto.Article;
 
 import com.myBlog.myblog.model.Article;
 import com.myBlog.myblog.model.Author;
 
-public class ArticleAuthorDTO {
+public class ArticleAuthorDto {
   private Long id;
   private Article article;
   private Author author;

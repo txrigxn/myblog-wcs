@@ -4,30 +4,29 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.myBlog.myblog.DTO.ArticleDTO;
-import com.myBlog.myblog.DTO.CategoryDTO;
+import com.myBlog.myblog.Dto.Article.ArticleDto;
+import com.myBlog.myblog.Dto.Category.CategoryDto;
 import com.myBlog.myblog.model.Category;
 
 @Component
 public class CategoryMapper {
-  
-  public CategoryDTO convertToDTO(Category category) {
-    CategoryDTO categoryDTO = new CategoryDTO();
-    categoryDTO.setId(category.getId());
-    categoryDTO.setName(category.getName());
-    categoryDTO.setUpdatedAt(category.getUpdatedAt());
+  public CategoryDto convertToDto(Category category) {
+    CategoryDto categoryDto = new CategoryDto();
+    categoryDto.setId(category.getId());
+    categoryDto.setName(category.getName());
+    categoryDto.setUpdatedAt(category.getUpdatedAt());
     if (category.getArticles() != null) {
-      categoryDTO.setArticles(category.getArticles().stream().map(article -> {
-        ArticleDTO articleDTO = new ArticleDTO();
-        articleDTO.setId(article.getId());
-        articleDTO.setTitle(article.getTitle());
-        articleDTO.setContent(article.getContent());
-        articleDTO.setUpdatedAt(article.getUpdatedAt());
-        articleDTO.setCategoryName(article.getCategory().getName());
-        return articleDTO;
+      categoryDto.setArticles(category.getArticles().stream().map(article -> {
+        ArticleDto articleDto = new ArticleDto();
+        articleDto.setId(article.getId());
+        articleDto.setTitle(article.getTitle());
+        articleDto.setContent(article.getContent());
+        articleDto.setUpdatedAt(article.getUpdatedAt());
+        articleDto.setCategoryName(article.getCategory().getName());
+        return articleDto;
       }).collect(Collectors.toList()));
     }
-        return categoryDTO;
+    return categoryDto;
   }
-  
+
 }

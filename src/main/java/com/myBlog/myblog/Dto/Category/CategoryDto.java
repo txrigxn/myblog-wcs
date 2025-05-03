@@ -1,17 +1,20 @@
-package com.myBlog.myblog.DTO;
+package com.myBlog.myblog.Dto.Category;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class CategoryDTO {
+import com.myBlog.myblog.Dto.Article.ArticleDto;
+
+public class CategoryDto {
   private Long id;
   private String name;
   private LocalDateTime updatedAt;
-  private List<ArticleDTO> articles;
+  private List<ArticleDto> articles;
 
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
@@ -32,11 +35,11 @@ public class CategoryDTO {
     this.updatedAt = updatedAt;
   }
   
-  public List<ArticleDTO> getArticles() {
+  public List<ArticleDto> getArticles() {
     return articles;
   }
 
-  public void setArticles(List<ArticleDTO> articles) {
+  public void setArticles(List<ArticleDto> articles) {
     this.articles = articles;
   }
   

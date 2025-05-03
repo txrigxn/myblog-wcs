@@ -1,8 +1,12 @@
 package com.myBlog.myblog.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import java.util.List;
-
-import jakarta.persistence.*;
 
 @Entity
 public class Author {
@@ -12,7 +16,7 @@ public class Author {
 
   @Column(nullable = false, length = 50)
   private String firstname;
-  
+
   @Column(nullable = false, length = 50)
   private String lastname;
 
@@ -38,7 +42,6 @@ public class Author {
     this.firstname = firstname;
   }
 
-
   public String getLastname() {
 
     return lastname;
@@ -56,10 +59,4 @@ public class Author {
     this.articleAuthors = articleAuthors;
   }
 
-
-
-
-
-  
-  
 }

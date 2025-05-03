@@ -1,6 +1,6 @@
-package com.myBlog.myblog.DTO.User;
+package com.myBlog.myblog.Dto.User;
 
-public class UserRegistrationDTO {
+public class UserLoginDto {
   private String email;
   private String password;
 
@@ -10,7 +10,7 @@ public class UserRegistrationDTO {
 
   public void setEmail(String email) {
     this.email = email;
-  }
+  } 
 
   public String getPassword() {
     return password;
@@ -19,5 +19,4 @@ public class UserRegistrationDTO {
   public void setPassword(String password) {
     this.password = password;
   }
-  
 }

@@ -1,6 +1,6 @@
-package com.myBlog.myblog.DTO;
+package com.myBlog.myblog.Dto.User;
 
-public class UserRegistrationDTO {
+public class UserRegistrationDto {
   private String email;
   private String password;
 

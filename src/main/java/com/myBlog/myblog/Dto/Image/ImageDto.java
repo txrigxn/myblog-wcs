@@ -1,10 +1,10 @@
-package com.myBlog.myblog.DTO;
+package com.myBlog.myblog.Dto.Image;
 
 import java.util.List;
 
 import org.hibernate.validator.constraints.URL;
 
-public class ImageDTO {
+public class ImageDto {
   private Long id;
   @URL(message = "L'URL de l'image doit etre valide.")
   private String url;

@@ -3,7 +3,7 @@ package com.myBlog.myblog.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myBlog.myblog.DTO.ImageDTO;
+import com.myBlog.myblog.Dto.Image.ImageDto;
 import com.myBlog.myblog.model.Image;
 import com.myBlog.myblog.service.ImageService;
 
@@ -29,40 +29,36 @@ public class ImageController {
   }
 
   @GetMapping
-
-  public ResponseEntity<List<ImageDTO>> getAllImages() {
-    List<ImageDTO> images = imageService.getAllImages();
+  public ResponseEntity<List<ImageDto>> getAllImages() {
+    List<ImageDto> images = imageService.getAllImages();
     return images.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(images);
   }
 
   @GetMapping("/{id}")
-
-  public ResponseEntity<ImageDTO> getImageById(@PathVariable Long id) {
-    ImageDTO image = imageService.getImageById(id);
+  public ResponseEntity<ImageDto> getImageById(@PathVariable Long id) {
+    ImageDto image = imageService.getImageById(id);
 
     return image != null ? ResponseEntity.ok(image) : ResponseEntity.notFound().build();
   }
 
   @PostMapping
-
-  public ResponseEntity<ImageDTO> create(@RequestBody Image image) {
-    ImageDTO savedImage = imageService.createImage(image);
+  public ResponseEntity<ImageDto> create(@RequestBody Image image) {
+    ImageDto savedImage = imageService.createImage(image);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(savedImage);
   }
 
   @PutMapping("/{id}")
   @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
-  public ResponseEntity<ImageDTO> update(@PathVariable Long id, @RequestBody Image imageDetails) {
+  public ResponseEntity<ImageDto> update(@PathVariable Long id, @RequestBody Image imageDetails) {
 
-    ImageDTO image = imageService.updateImage(id, imageDetails);
+    ImageDto image = imageService.updateImage(id, imageDetails);
 
     return image != null ? ResponseEntity.ok(image) : ResponseEntity.notFound().build();
   }
 
   @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   @DeleteMapping("/{id}")
-
   public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
     return imageService.deleteImage(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
   }
