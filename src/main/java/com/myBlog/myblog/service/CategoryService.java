@@ -1,16 +1,14 @@
 package com.myBlog.myblog.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
 import com.myBlog.myblog.Dto.Category.CategoryDto;
 import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.CategoryMapper;
 import com.myBlog.myblog.model.Category;
 import com.myBlog.myblog.repository.CategoryRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryService {
@@ -30,7 +28,8 @@ public class CategoryService {
 
   public CategoryDto getCategoryById(Long id) {
     Category category = categoryRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
+        .orElseThrow(() -> new ResourceNotFoundException(
+            "La categorie avec l'id " + id + " n'a pas été trouvé."));
 
     return category != null ? categoryMapper.convertToDto(category) : null;
   }
@@ -46,11 +45,13 @@ public class CategoryService {
 
   public CategoryDto updateCategory(Long id, Category categoryDetails) {
     Category category = categoryRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
+        .orElseThrow(() -> new ResourceNotFoundException(
+            "La categorie avec l'id " + id + " n'a pas été trouvé."));
     ;
 
-    if (category == null)
+    if (category == null) {
       return null;
+    }
 
     category.setName(categoryDetails.getName());
     category.setUpdatedAt(categoryDetails.getUpdatedAt());
@@ -62,7 +63,8 @@ public class CategoryService {
 
   public boolean deleteCategory(Long id) {
     Category category = categoryRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("La categorie avec l'id " + id + " n'a pas été trouvé."));
+        .orElseThrow(() -> new ResourceNotFoundException(
+            "La categorie avec l'id " + id + " n'a pas été trouvé."));
     ;
     if (category == null) {
       return false;

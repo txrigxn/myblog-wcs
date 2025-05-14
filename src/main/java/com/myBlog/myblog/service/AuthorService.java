@@ -1,15 +1,13 @@
 package com.myBlog.myblog.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
 import com.myBlog.myblog.Dto.Author.AuthorDto;
 import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.AuthorMapper;
 import com.myBlog.myblog.model.Author;
 import com.myBlog.myblog.repository.AuthorRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthorService {
@@ -28,7 +26,8 @@ public class AuthorService {
 
   public AuthorDto getAuthorById(Long id) {
     Author author = authorRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("L'auteur avec l'id " + id + " n'a pas été trouvé."));
+        .orElseThrow(() -> new ResourceNotFoundException(
+            "L'auteur avec l'id " + id + " n'a pas été trouvé."));
 
     return author != null ? authorMapper.convertToDto(author) : null;
   }

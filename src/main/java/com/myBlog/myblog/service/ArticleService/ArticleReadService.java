@@ -29,7 +29,8 @@ public class ArticleReadService {
 
   public ArticleDto getArticleById(Long id) {
     Article article = articleRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("L'article avec l'id " + id + " n'a pas été trouvé."));
+        .orElseThrow(() -> new ResourceNotFoundException(
+            "L'article avec l'id " + id + " n'a pas été trouvé."));
     if (article == null) {
       return null;
     }
