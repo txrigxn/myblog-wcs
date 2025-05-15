@@ -46,16 +46,12 @@ class CategoryServiceTest {
     CategoryDto categoryDto2 = new CategoryDto();
     categoryDto2.setName(category2.getName());
 
-    when(categoryRepository.findAll())
-        .thenReturn(List.of(category1, category2));
-    when(categoryMapper.convertToDto(category1))
-        .thenReturn(categoryDto1);
-    when(categoryMapper.convertToDto(category2))
-        .thenReturn(categoryDto2);
+    when(categoryRepository.findAll()).thenReturn(List.of(category1, category2));
+    when(categoryMapper.convertToDto(category1)).thenReturn(categoryDto1);
+    when(categoryMapper.convertToDto(category2)).thenReturn(categoryDto2);
 
     // ACT
-    List<CategoryDto> categories = categoryService
-        .getAllCategories();
+    List<CategoryDto> categories = categoryService.getAllCategories();
 
     // ASSERT
     assertThat(categories).hasSize(2);
@@ -82,8 +78,7 @@ class CategoryServiceTest {
 
   @Test
   void testGetCategoryByIdCategoryNotFound() {
-    when(categoryRepository.findById(99L))
-        .thenReturn(Optional.empty());
+    when(categoryRepository.findById(99L)).thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> categoryService.getCategoryById(99L))
         .isInstanceOf(RuntimeException.class)

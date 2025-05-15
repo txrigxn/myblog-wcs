@@ -42,7 +42,7 @@ public class User implements UserDetails {
   public String getPassword() {
     return password;
   }
-  
+
   public void setPassword(String password) {
     this.password = password;
   }
@@ -54,19 +54,22 @@ public class User implements UserDetails {
   public void setRoles(Set<String> roles) {
     this.roles = roles;
   }
+
   @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-      return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
-    }
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+  }
+
   @Override
   public String getUsername() {
     return email;
   }
+
   @Override
   public boolean isAccountNonExpired() {
     return true;
   }
-  
+
   @Override
   public boolean isAccountNonLocked() {
     return true;

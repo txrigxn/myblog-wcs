@@ -6,10 +6,12 @@ import com.myBlog.myblog.service.CategoryService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +33,7 @@ public class CategoryController {
     if (categories.isEmpty()) {
       return ResponseEntity.noContent().build();
     }
-    return categories.isEmpty()
-        ? ResponseEntity.noContent().build()
+    return categories.isEmpty() ? ResponseEntity.noContent().build()
         : ResponseEntity.ok(categories);
   }
 
@@ -50,19 +51,19 @@ public class CategoryController {
 
   }
 
-  @PostMapping("/{id}")
-  public ResponseEntity<CategoryDto> update(
-      @PathVariable Long id,
+  @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
+  @PutMapping("/{id}")
+  public ResponseEntity<CategoryDto> update(@PathVariable Long id,
       @RequestBody Category categoryDetails) {
     CategoryDto category = categoryService.updateCategory(id, categoryDetails);
 
     return category != null ? ResponseEntity.ok(category) : ResponseEntity.notFound().build();
   }
 
+  @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
-    return categoryService.deleteCategory(id)
-        ? ResponseEntity.noContent().build()
+    return categoryService.deleteCategory(id) ? ResponseEntity.noContent().build()
         : ResponseEntity.notFound().build();
   }
 

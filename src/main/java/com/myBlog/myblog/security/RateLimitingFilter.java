@@ -20,7 +20,7 @@ public class RateLimitingFilter implements Filter {
 
   private final Map<String, AtomicInteger> requestCountsPerIpAddress = new ConcurrentHashMap<>();
 
-  private static final int MAX_REQUESTS_PER_MINUTE = 5;
+  private static final int MAX_REQUESTS_PER_MINUTE = 10;
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
