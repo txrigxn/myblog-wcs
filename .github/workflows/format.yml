@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: axel-op/googlejavaformat-action@v4
         with:
-          args: "--replace"
+          args: "--replace --dry-run"
