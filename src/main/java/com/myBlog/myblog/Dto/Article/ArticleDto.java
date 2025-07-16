@@ -1,10 +1,8 @@
 package com.myBlog.myblog.Dto.Article;
 
+import com.myBlog.myblog.Dto.Author.AuthorDto;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import com.myBlog.myblog.Dto.Author.AuthorDto;
-
 
 public class ArticleDto {
   private Long id;
@@ -18,6 +16,7 @@ public class ArticleDto {
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
@@ -25,7 +24,6 @@ public class ArticleDto {
   public String getTitle() {
     return title;
   }
-
 
   public void setTitle(String title) {
     this.title = title;
@@ -63,12 +61,11 @@ public class ArticleDto {
     this.imageUrls = imageUrls;
   }
 
-    public List<AuthorDto> getAuthors() {
+  public List<AuthorDto> getAuthors() {
     return authors;
   }
 
   public void setAuthors(List<AuthorDto> authors) {
     this.authors = authors;
   }
-
 }

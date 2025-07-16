@@ -27,7 +27,10 @@ public class Article {
   private Category category;
 
   @ManyToMany
-  @JoinTable(name = "article_image", joinColumns = @JoinColumn(name = "article_id"), inverseJoinColumns = @JoinColumn(name = "image_id"))
+  @JoinTable(
+      name = "article_image",
+      joinColumns = @JoinColumn(name = "article_id"),
+      inverseJoinColumns = @JoinColumn(name = "image_id"))
   private List<Image> images;
 
   @OneToMany(mappedBy = "article")
@@ -96,5 +99,4 @@ public class Article {
   public void setArticleAuthors(List<ArticleAuthor> articleAuthors) {
     this.articleAuthors = articleAuthors;
   }
-
 }

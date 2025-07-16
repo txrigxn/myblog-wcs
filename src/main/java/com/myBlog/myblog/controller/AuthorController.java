@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/authors")
 public class AuthorController {
@@ -33,7 +32,6 @@ public class AuthorController {
       return ResponseEntity.noContent().build();
     }
     return ResponseEntity.ok(authors);
-
   }
 
   @GetMapping("/{id}")
@@ -59,8 +57,8 @@ public class AuthorController {
   @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
-    return authorService.deleteAuthor(id) ? ResponseEntity.noContent().build()
+    return authorService.deleteAuthor(id)
+        ? ResponseEntity.noContent().build()
         : ResponseEntity.notFound().build();
   }
-
 }

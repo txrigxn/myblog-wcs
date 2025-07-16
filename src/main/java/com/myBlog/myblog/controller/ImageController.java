@@ -1,5 +1,8 @@
 package com.myBlog.myblog.controller;
 
+import com.myBlog.myblog.Dto.Image.ImageDto;
+import com.myBlog.myblog.model.Image;
+import com.myBlog.myblog.service.ImageService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.myBlog.myblog.Dto.Image.ImageDto;
-import com.myBlog.myblog.model.Image;
-import com.myBlog.myblog.service.ImageService;
 
 @RestController
 @RequestMapping("/images")
@@ -57,7 +57,8 @@ public class ImageController {
   @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
-    return imageService.deleteImage(id) ? ResponseEntity.noContent().build()
+    return imageService.deleteImage(id)
+        ? ResponseEntity.noContent().build()
         : ResponseEntity.notFound().build();
   }
 }

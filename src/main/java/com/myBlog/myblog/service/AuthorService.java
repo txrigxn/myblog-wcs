@@ -25,9 +25,13 @@ public class AuthorService {
   }
 
   public AuthorDto getAuthorById(Long id) {
-    Author author = authorRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(
-            "L'auteur avec l'id " + id + " n'a pas été trouvé."));
+    Author author =
+        authorRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "L'auteur avec l'id " + id + " n'a pas été trouvé."));
 
     return author != null ? authorMapper.convertToDto(author) : null;
   }
@@ -38,9 +42,13 @@ public class AuthorService {
   }
 
   public AuthorDto updateAuthor(Long id, Author authorDetails) {
-    Author author = authorRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(
-            "L'auteur avec l'id " + id + " n'a pas été trouvé."));
+    Author author =
+        authorRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "L'auteur avec l'id " + id + " n'a pas été trouvé."));
     if (author == null) {
       return null;
     }
@@ -54,9 +62,13 @@ public class AuthorService {
   }
 
   public boolean deleteAuthor(Long id) {
-    Author author = authorRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(
-            "L'auteur avec l'id " + id + " n'a pas été trouvé."));
+    Author author =
+        authorRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "L'auteur avec l'id " + id + " n'a pas été trouvé."));
     if (author == null) {
       return false;
     }

@@ -12,12 +12,11 @@ public class MyBlogApplication {
 
   @Bean
   ObservationRegistryCustomizer<ObservationRegistry> addTextHandler() {
-    return (registry) -> registry.observationConfig()
-        .observationHandler(new ObservationTextPublisher());
+    return (registry) ->
+        registry.observationConfig().observationHandler(new ObservationTextPublisher());
   }
 
   public static void main(String[] args) {
     SpringApplication.run(MyBlogApplication.class, args);
   }
-
 }

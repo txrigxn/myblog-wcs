@@ -33,7 +33,8 @@ public class CategoryController {
     if (categories.isEmpty()) {
       return ResponseEntity.noContent().build();
     }
-    return categories.isEmpty() ? ResponseEntity.noContent().build()
+    return categories.isEmpty()
+        ? ResponseEntity.noContent().build()
         : ResponseEntity.ok(categories);
   }
 
@@ -48,13 +49,12 @@ public class CategoryController {
     CategoryDto savedCategory = categoryService.createCategory(category);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
-
   }
 
   @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   @PutMapping("/{id}")
-  public ResponseEntity<CategoryDto> update(@PathVariable Long id,
-      @RequestBody Category categoryDetails) {
+  public ResponseEntity<CategoryDto> update(
+      @PathVariable Long id, @RequestBody Category categoryDetails) {
     CategoryDto category = categoryService.updateCategory(id, categoryDetails);
 
     return category != null ? ResponseEntity.ok(category) : ResponseEntity.notFound().build();
@@ -63,8 +63,8 @@ public class CategoryController {
   @PreAuthorize("id == authentication.principal.id or hasRole('ROLE_ADMIN')")
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id) {
-    return categoryService.deleteCategory(id) ? ResponseEntity.noContent().build()
+    return categoryService.deleteCategory(id)
+        ? ResponseEntity.noContent().build()
         : ResponseEntity.notFound().build();
   }
-
 }

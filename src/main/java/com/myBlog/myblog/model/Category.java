@@ -1,9 +1,8 @@
 package com.myBlog.myblog.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import jakarta.persistence.*;
 
 @Entity
 public class Category {
@@ -26,7 +25,7 @@ public class Category {
   public Long getId() {
     return id;
   }
-  
+
   public void setId(Long id) {
     this.id = id;
   }
@@ -61,6 +60,5 @@ public class Category {
 
   public void setArticles(List<Article> articles) {
     this.articles = articles;
-  
   }
 }

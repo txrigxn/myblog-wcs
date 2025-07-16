@@ -50,9 +50,15 @@ public class ArticleWriteService {
     article.setUpdatedAt(LocalDateTime.now());
 
     if (article.getCategory() != null) {
-      Category category = categoryRepository.findById(article.getCategory().getId())
-          .orElseThrow(() -> new ResourceNotFoundException(
-              "La categorie avec l'id " + article.getCategory().getId() + " n'a pas été trouvé."));
+      Category category =
+          categoryRepository
+              .findById(article.getCategory().getId())
+              .orElseThrow(
+                  () ->
+                      new ResourceNotFoundException(
+                          "La categorie avec l'id "
+                              + article.getCategory().getId()
+                              + " n'a pas été trouvé."));
       if (category == null) {
         return null;
       }
@@ -63,9 +69,13 @@ public class ArticleWriteService {
       List<Image> validImages = new ArrayList<>();
       for (Image image : article.getImages()) {
         if (image.getId() != null) {
-          Image existingImage = imageRepository.findById(image.getId()).orElseThrow(
-              () -> new ResourceNotFoundException(
-                  "L'image avec l'id " + image.getId() + " n'a pas été trouvé."));
+          Image existingImage =
+              imageRepository
+                  .findById(image.getId())
+                  .orElseThrow(
+                      () ->
+                          new ResourceNotFoundException(
+                              "L'image avec l'id " + image.getId() + " n'a pas été trouvé."));
           if (existingImage != null) {
             validImages.add(existingImage);
           } else {
@@ -83,8 +93,15 @@ public class ArticleWriteService {
     if (article.getArticleAuthors() != null) {
       for (ArticleAuthor articleAuthor : article.getArticleAuthors()) {
         Author author = articleAuthor.getAuthor();
-        author = authorRepository.findById(author.getId()).orElseThrow(() -> new ResourceNotFoundException(
-            "L'auteur avec l'id " + articleAuthor.getAuthor().getId() + " n'a pas été trouvé."));
+        author =
+            authorRepository
+                .findById(author.getId())
+                .orElseThrow(
+                    () ->
+                        new ResourceNotFoundException(
+                            "L'auteur avec l'id "
+                                + articleAuthor.getAuthor().getId()
+                                + " n'a pas été trouvé."));
         if (author == null) {
           return null;
         }
@@ -99,9 +116,13 @@ public class ArticleWriteService {
   }
 
   public ArticleDto updateArticle(Long id, Article articleDetails) {
-    Article article = articleRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(
-            "L'article avec l'id " + id + " n'a pas été trouvé."));
+    Article article =
+        articleRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "L'article avec l'id " + id + " n'a pas été trouvé."));
     if (article == null) {
       return null;
     }
@@ -111,10 +132,15 @@ public class ArticleWriteService {
     article.setUpdatedAt(LocalDateTime.now());
 
     if (articleDetails.getCategory() != null) {
-      Category category = categoryRepository.findById(articleDetails.getCategory().getId())
-          .orElseThrow(() -> new ResourceNotFoundException(
-              "La categorie avec l'id "
-                  + articleDetails.getCategory().getId() + " n'a pas été trouvé."));
+      Category category =
+          categoryRepository
+              .findById(articleDetails.getCategory().getId())
+              .orElseThrow(
+                  () ->
+                      new ResourceNotFoundException(
+                          "La categorie avec l'id "
+                              + articleDetails.getCategory().getId()
+                              + " n'a pas été trouvé."));
       if (category == null) {
         return null;
       }
@@ -129,9 +155,13 @@ public class ArticleWriteService {
   }
 
   public boolean deleteArticle(Long id) {
-    Article article = articleRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(
-            "L'article avec l'id " + id + " n'a pas été trouvé."));
+    Article article =
+        articleRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "L'article avec l'id " + id + " n'a pas été trouvé."));
 
     if (article == null) {
       return false;
@@ -151,11 +181,15 @@ public class ArticleWriteService {
 
       for (ArticleAuthor articleAuthorDetails : articleDetails.getArticleAuthors()) {
         Author author = articleAuthorDetails.getAuthor();
-        author = authorRepository.findById(author.getId()).orElseThrow(
-            () -> new ResourceNotFoundException(
-                "L'auteur avec l'id "
-                    + articleAuthorDetails.getAuthor().getId()
-                    + " n'a pas été trouvé."));
+        author =
+            authorRepository
+                .findById(author.getId())
+                .orElseThrow(
+                    () ->
+                        new ResourceNotFoundException(
+                            "L'auteur avec l'id "
+                                + articleAuthorDetails.getAuthor().getId()
+                                + " n'a pas été trouvé."));
         if (author == null) {
           return;
         }
@@ -179,9 +213,13 @@ public class ArticleWriteService {
       List<Image> validImages = new ArrayList<>();
       for (Image image : articleDetails.getImages()) {
         if (image.getId() != null) {
-          Image existingImage = imageRepository.findById(image.getId()).orElseThrow(
-              () -> new ResourceNotFoundException(
-                  "L'image avec l'id " + image.getId() + " n'a pas été trouvé."));
+          Image existingImage =
+              imageRepository
+                  .findById(image.getId())
+                  .orElseThrow(
+                      () ->
+                          new ResourceNotFoundException(
+                              "L'image avec l'id " + image.getId() + " n'a pas été trouvé."));
           if (existingImage != null) {
             validImages.add(existingImage);
           }
@@ -194,6 +232,5 @@ public class ArticleWriteService {
     } else {
       article.getImages().clear();
     }
-
   }
 }

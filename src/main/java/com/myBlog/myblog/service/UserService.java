@@ -1,12 +1,10 @@
 package com.myBlog.myblog.service;
 
-import java.util.Set;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.myBlog.myblog.model.User;
 import com.myBlog.myblog.repository.UserRepository;
+import java.util.Set;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
@@ -28,5 +26,4 @@ public class UserService {
     user.setRoles(roles);
     return userRepository.save(user);
   }
-  
 }

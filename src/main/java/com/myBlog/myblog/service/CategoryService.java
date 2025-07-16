@@ -27,9 +27,13 @@ public class CategoryService {
   }
 
   public CategoryDto getCategoryById(Long id) {
-    Category category = categoryRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(
-            "La categorie avec l'id " + id + " n'a pas été trouvé."));
+    Category category =
+        categoryRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "La categorie avec l'id " + id + " n'a pas été trouvé."));
 
     return category != null ? categoryMapper.convertToDto(category) : null;
   }
@@ -44,9 +48,13 @@ public class CategoryService {
   }
 
   public CategoryDto updateCategory(Long id, Category categoryDetails) {
-    Category category = categoryRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(
-            "La categorie avec l'id " + id + " n'a pas été trouvé."));
+    Category category =
+        categoryRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "La categorie avec l'id " + id + " n'a pas été trouvé."));
     ;
 
     if (category == null) {
@@ -62,9 +70,13 @@ public class CategoryService {
   }
 
   public boolean deleteCategory(Long id) {
-    Category category = categoryRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(
-            "La categorie avec l'id " + id + " n'a pas été trouvé."));
+    Category category =
+        categoryRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "La categorie avec l'id " + id + " n'a pas été trouvé."));
     ;
     if (category == null) {
       return false;

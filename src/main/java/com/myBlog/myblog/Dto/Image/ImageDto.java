@@ -1,15 +1,16 @@
 package com.myBlog.myblog.Dto.Image;
 
 import java.util.List;
-
 import org.hibernate.validator.constraints.URL;
 
 public class ImageDto {
   private Long id;
+
   @URL(message = "L'URL de l'image doit etre valide.")
   private String url;
+
   private List<Long> articleIds;
-  
+
   public Long getId() {
     return id;
   }
@@ -32,6 +33,5 @@ public class ImageDto {
 
   public void setArticleIds(List<Long> articleIds) {
     this.articleIds = articleIds;
-  } 
-  
+  }
 }

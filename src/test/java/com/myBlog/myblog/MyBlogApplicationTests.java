@@ -10,5 +10,4 @@ class MyBlogApplicationTests {
 
   @Test
   void contextLoads() {}
-
 }

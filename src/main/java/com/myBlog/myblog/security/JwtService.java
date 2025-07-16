@@ -1,13 +1,13 @@
 package com.myBlog.myblog.security;
 
-import java.util.Date;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
@@ -18,10 +18,13 @@ public class JwtService {
   private long jwtExpiration;
 
   public String generateToken(UserDetails userDetails) {
-    return Jwts.builder().setSubject(userDetails.getUsername())
-        .claim("roles", userDetails.getAuthorities()).setIssuedAt(new Date())
+    return Jwts.builder()
+        .setSubject(userDetails.getUsername())
+        .claim("roles", userDetails.getAuthorities())
+        .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
-        .signWith(SignatureAlgorithm.HS256, secretKey).compact();
+        .signWith(SignatureAlgorithm.HS256, secretKey)
+        .compact();
   }
 
   public Claims extractClaims(String token) {
@@ -36,5 +39,4 @@ public class JwtService {
       return false;
     }
   }
-
 }

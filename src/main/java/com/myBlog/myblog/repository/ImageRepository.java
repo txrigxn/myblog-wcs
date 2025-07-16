@@ -1,8 +1,6 @@
 package com.myBlog.myblog.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.myBlog.myblog.model.Image;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ImageRepository extends JpaRepository<Image, Long> {
-  
-}
+public interface ImageRepository extends JpaRepository<Image, Long> {}

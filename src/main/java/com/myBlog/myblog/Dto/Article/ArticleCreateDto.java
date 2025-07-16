@@ -1,6 +1,5 @@
 package com.myBlog.myblog.Dto.Article;
 
-import java.util.List;
 import com.myBlog.myblog.Dto.Author.AuthorContributionDto;
 import com.myBlog.myblog.Dto.Image.ImageDto;
 import jakarta.validation.Valid;
@@ -9,6 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 
 public class ArticleCreateDto {
 

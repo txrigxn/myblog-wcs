@@ -22,12 +22,9 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class CategoryServiceTest {
 
-  @Mock
-  private CategoryRepository categoryRepository;
-  @Mock
-  private CategoryMapper categoryMapper;
-  @InjectMocks
-  private CategoryService categoryService;
+  @Mock private CategoryRepository categoryRepository;
+  @Mock private CategoryMapper categoryMapper;
+  @InjectMocks private CategoryService categoryService;
 
   @Test
   void testGetAllCategories() {
@@ -84,5 +81,4 @@ class CategoryServiceTest {
         .isInstanceOf(RuntimeException.class)
         .hasMessage("La categorie avec l'id 99 n'a pas été trouvé.");
   }
-
 }

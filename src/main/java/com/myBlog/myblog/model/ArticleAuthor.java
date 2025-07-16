@@ -4,55 +4,53 @@ import jakarta.persistence.*;
 
 @Entity
 public class ArticleAuthor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "article_id")
-    private Article article;
+  @ManyToOne
+  @JoinColumn(name = "article_id")
+  private Article article;
 
+  @ManyToOne
+  @JoinColumn(name = "author_id")
+  private Author author;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private Author author;
+  @Column(nullable = false, length = 50)
+  private String contribution;
 
-    @Column(nullable = false, length = 50)
-    private String contribution;
+  // Getters and Setters
 
-    //Getters and Setters
+  public Long getId() {
 
-    public Long getId() {
+    return id;
+  }
 
-      return id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public void setId(Long id) {
-      this.id = id;
-    }
+  public Article getArticle() {
+    return article;
+  }
 
-    public Article getArticle() {
-      return article;
-    }
+  public void setArticle(Article article) {
+    this.article = article;
+  }
 
-    public void setArticle(Article article) {
-      this.article = article;
-    }
+  public Author getAuthor() {
+    return author;
+  }
 
-    public Author getAuthor() {
-      return author;
-    }
+  public void setAuthor(Author author) {
+    this.author = author;
+  }
 
-    public void setAuthor(Author author) {
-      this.author = author;
-    }
+  public String getContribution() {
+    return contribution;
+  }
 
-    public String getContribution() {
-      return contribution;
-    }
-
-    public void setContribution(String contribution) {
-      this.contribution = contribution;
-    }
-
+  public void setContribution(String contribution) {
+    this.contribution = contribution;
+  }
 }

@@ -1,9 +1,8 @@
 package com.myBlog.myblog.Dto.Category;
 
+import com.myBlog.myblog.Dto.Article.ArticleDto;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import com.myBlog.myblog.Dto.Article.ArticleDto;
 
 public class CategoryDto {
   private Long id;
@@ -22,7 +21,7 @@ public class CategoryDto {
   public String getName() {
     return name;
   }
-  
+
   public void setName(String name) {
     this.name = name;
   }
@@ -34,7 +33,7 @@ public class CategoryDto {
   public void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
-  
+
   public List<ArticleDto> getArticles() {
     return articles;
   }
@@ -42,5 +41,4 @@ public class CategoryDto {
   public void setArticles(List<ArticleDto> articles) {
     this.articles = articles;
   }
-  
 }

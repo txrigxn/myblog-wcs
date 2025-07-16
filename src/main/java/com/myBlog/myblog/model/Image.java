@@ -1,15 +1,13 @@
 package com.myBlog.myblog.model;
 
-import java.util.List;
-
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Image {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
 
   @Column(nullable = false)
   private String url;
@@ -41,8 +39,4 @@ public class Image {
   public void setArticles(List<Article> articles) {
     this.articles = articles;
   }
-
-
-  
-  
 }

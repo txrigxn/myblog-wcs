@@ -9,7 +9,6 @@ public class ArticleAuthorDto {
   private Author author;
   private String contribution;
 
-
   public Long getId() {
     return id;
   }
@@ -44,5 +43,4 @@ public class ArticleAuthorDto {
 
     this.contribution = contribution;
   }
-  
 }

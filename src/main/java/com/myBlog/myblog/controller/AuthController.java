@@ -28,8 +28,9 @@ public class AuthController {
 
   @PostMapping("register")
   public ResponseEntity<User> register(@RequestBody UserRegistrationDto userRegistrationDto) {
-    User registeredUser = userService.registerUser(userRegistrationDto.getEmail(),
-        userRegistrationDto.getPassword(), Set.of("ROLE_USER"));
+    User registeredUser =
+        userService.registerUser(
+            userRegistrationDto.getEmail(), userRegistrationDto.getPassword(), Set.of("ROLE_USER"));
     return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
   }
 
@@ -39,5 +40,4 @@ public class AuthController {
         authenticationService.authenticate(userLoginDto.getEmail(), userLoginDto.getPassword());
     return ResponseEntity.ok(token);
   }
-
 }

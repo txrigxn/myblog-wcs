@@ -60,5 +60,4 @@ public class RateLimitingFilter implements Filter {
   public void destroy() {
     // Optional: Cleanup resources, if needed
   }
-
 }

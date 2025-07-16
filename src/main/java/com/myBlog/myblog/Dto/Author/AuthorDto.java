@@ -8,11 +8,10 @@ public class AuthorDto {
   private String lastname;
   private List<Long> articleIds;
 
-
   public Long getId() {
     return id;
   }
-  
+
   public void setId(Long id) {
     this.id = id;
   }
@@ -29,7 +28,6 @@ public class AuthorDto {
     return lastname;
   }
 
-
   public void setLastname(String lastname) {
     this.lastname = lastname;
   }
@@ -41,5 +39,4 @@ public class AuthorDto {
   public void setArticleIds(List<Long> articleIds) {
     this.articleIds = articleIds;
   }
-  
 }

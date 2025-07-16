@@ -2,7 +2,6 @@ package com.myBlog.myblog.exception;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,17 +34,17 @@ public class GlobalExceptionHandler {
 
     Map<String, String> errors = new HashMap<>();
 
-    ex.getBindingResult().getAllErrors().forEach((error) -> {
+    ex.getBindingResult()
+        .getAllErrors()
+        .forEach(
+            (error) -> {
+              String fieldName = ((FieldError) error).getField();
 
-      String fieldName = ((FieldError) error).getField();
+              String errorMessage = error.getDefaultMessage();
 
-      String errorMessage = error.getDefaultMessage();
-
-      errors.put(fieldName, errorMessage);
-
-    });
+              errors.put(fieldName, errorMessage);
+            });
 
     return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
   }
-
 }

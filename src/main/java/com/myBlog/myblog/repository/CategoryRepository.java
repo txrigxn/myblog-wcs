@@ -1,7 +1,6 @@
 package com.myBlog.myblog.repository;
 
+import com.myBlog.myblog.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.myBlog.myblog.model.Category;
-public interface CategoryRepository extends JpaRepository<Category, Long> {
-}
+public interface CategoryRepository extends JpaRepository<Category, Long> {}

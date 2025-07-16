@@ -1,16 +1,14 @@
 package com.myBlog.myblog.service.ArticleService;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
 import com.myBlog.myblog.Dto.Article.ArticleDto;
 import com.myBlog.myblog.exception.ResourceNotFoundException;
 import com.myBlog.myblog.mapper.ArticleMapper;
 import com.myBlog.myblog.model.Article;
 import com.myBlog.myblog.repository.ArticleRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ArticleReadService {
@@ -28,9 +26,13 @@ public class ArticleReadService {
   }
 
   public ArticleDto getArticleById(Long id) {
-    Article article = articleRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException(
-            "L'article avec l'id " + id + " n'a pas été trouvé."));
+    Article article =
+        articleRepository
+            .findById(id)
+            .orElseThrow(
+                () ->
+                    new ResourceNotFoundException(
+                        "L'article avec l'id " + id + " n'a pas été trouvé."));
     if (article == null) {
       return null;
     }
